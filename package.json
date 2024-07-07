@@ -1,0 +1,15 @@
+{
+  "name": "backend_chaicode",
+  "version": "1.0.0",
+  "description": "learning backend",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "JS",
+    "backend"
+  ],
+  "author": "Kavish Ambani",
+  "license": "ISC"
+}
