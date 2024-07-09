@@ -76,7 +76,7 @@ const loginUser = asyncHandler(async (req, res)=>{
     // req body -> data
     const {email, username, password} = req.body;
     // username or email
-    if (!username || !email) {
+    if (!(username || email)) {
         throw new ApiError(400, "username or email is required");
     }
     // find user
@@ -100,12 +100,20 @@ const loginUser = asyncHandler(async (req, res)=>{
         httpOnly: true,
         secure: true
     }
-    return res.status(200).cookie("accessToken",accessToken, options).cookie("refreshToken", refreshToken, options).json(
-        new ApiResponse(200, {
-            user: loggedInUser, accessToken, refreshToken
-        }),
-        "User logged in successfully"
-    )
+    
+    return res
+    .status(200)
+    .cookie("accessToken",accessToken, options)
+    .cookie("refreshToken", refreshToken, options)
+    .json({
+        status: 200,
+        message: "User logged in successfully",
+        data: {
+            user: loggedInUser,
+            accessToken: accessToken,
+            refreshToken: refreshToken
+        }
+    })
 })
 const logoutUser = asyncHandler(async(req, res)=>{
     await User.findByIdAndUpdate(req.user._id,{$set:{refreshToken: undefined}},{new: true})
