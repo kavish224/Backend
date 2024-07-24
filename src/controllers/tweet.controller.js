@@ -32,7 +32,6 @@ const getUserTweets = asyncHandler(async (req, res) => {
     if (!isValidObjectId(userId)) {
         throw new ApiError(400, "Invalid userId");
     }
-
     const tweets = await Tweet.aggregate([
         {
             $match: {
@@ -102,10 +101,7 @@ const getUserTweets = asyncHandler(async (req, res) => {
             },
         },
     ]);
-
-    return res
-        .status(200)
-        .json(new ApiResponse(200, tweets, "Tweets fetched successfully"));
+    return res.status(200).json(new ApiResponse(200, tweets, "Tweets fetched successfully"));
 })
 
 const updateTweet = asyncHandler(async (req, res) => {
