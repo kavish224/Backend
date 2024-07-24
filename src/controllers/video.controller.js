@@ -9,7 +9,8 @@ import { asyncHandler } from "../utils/asyncHandler.js"
 import { deleteFromCloudinary, uploadOnCloudinary } from "../utils/cloudinary.js"
 import { ObjectId } from "bson"
 const getAllVideos = asyncHandler(async (req, res) => {
-    const { page = 1, limit = 10, query, sortBy, sortType, userId } = req.query
+    const { page = 1, limit = 10, query, sortBy, sortType} = req.query
+    const {userId} = req.params;
     //TODO: get all videos based on query, sort, pagination
     // console.log(userId);
     const pipeline = [];
@@ -30,19 +31,17 @@ const getAllVideos = asyncHandler(async (req, res) => {
         });
     }
     if (userId) {
-        try {
+    
             if (!isValidObjectId(userId)) {
                 throw new ApiError(400, "invalid user");
             }
             const id = userId
             pipeline.push({
                 $match: {
-                    owner: new ObjectId(id)
+                    owner: new mongoose.Types.ObjectId(userId)
                 }
             }); 
-        } catch (error) {
-            throw new ApiError(400, "cant find user video")
-        }
+        
     }
     pipeline.push({ $match: { isPublished: true } });
     if (sortBy && sortType) {
