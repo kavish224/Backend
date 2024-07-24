@@ -274,6 +274,6 @@ export {
     getPlaylistById,
     addVideoToPlaylist,
     removeVideoFromPlaylist,
-    deletePlaylist,
-    updatePlaylist
+    updatePlaylist,
+    deletePlaylist
 }
