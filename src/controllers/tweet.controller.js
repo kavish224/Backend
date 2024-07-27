@@ -24,8 +24,7 @@ const createTweet = asyncHandler(async (req, res) => {
     return res
         .status(200)
         .json(new ApiResponse(200, tweet, "Tweet created successfully"));
-})
-
+});
 const getUserTweets = asyncHandler(async (req, res) => {
     const { userId } = req.params;
 
@@ -102,8 +101,7 @@ const getUserTweets = asyncHandler(async (req, res) => {
         },
     ]);
     return res.status(200).json(new ApiResponse(200, tweets, "Tweets fetched successfully"));
-})
-
+});
 const updateTweet = asyncHandler(async (req, res) => {
     //TODO: update tweet
     const { content } = req.body;
@@ -144,8 +142,7 @@ const updateTweet = asyncHandler(async (req, res) => {
     return res
         .status(200)
         .json(new ApiResponse(200, newTweet, "Tweet updated successfully"));
-})
-
+});
 const deleteTweet = asyncHandler(async (req, res) => {
     //TODO: delete tweet
     const { tweetId } = req.params;
@@ -169,8 +166,7 @@ const deleteTweet = asyncHandler(async (req, res) => {
     return res
         .status(200)
         .json(new ApiResponse(200, {tweetId}, "Tweet deleted successfully"));
-})
-
+});
 export {
     createTweet,
     getUserTweets,
