@@ -143,7 +143,7 @@ const getPlaylistById = asyncHandler(async (req, res) => {
         }
 
     ]);
-    res.status(200).json(200, playlistVideos, "playlist found")
+    res.status(200).json(new ApiResponse(200, playlistVideos, "playlist found"))
 })
 const addVideoToPlaylist = asyncHandler(async (req, res) => {
     const { playlistId, videoId } = req.params
@@ -176,7 +176,6 @@ const addVideoToPlaylist = asyncHandler(async (req, res) => {
     if (!updatedPlaylist) {
         throw new ApiError(400, "failed to add video to playlist please try again");
     }
-
     return res.status(200).json(new ApiResponse(200, updatedPlaylist, "Added video to playlist successfully"));
 });
 const removeVideoFromPlaylist = asyncHandler(async (req, res) => {
@@ -211,7 +210,6 @@ const removeVideoFromPlaylist = asyncHandler(async (req, res) => {
     if (!updatedPlaylist) {
         throw new ApiError(400, "failed to remove video from playlist please try again");
     }
-
     return res.status(200).json(new ApiResponse(200, updatedPlaylist, "removed video from playlist successfully"));
 });
 const deletePlaylist = asyncHandler(async (req, res) => {
@@ -265,7 +263,6 @@ const updatePlaylist = asyncHandler(async (req, res) => {
         },
         { new: true }
     );
-
     return res.status(200).json(new ApiResponse(200, updatedPlaylist, "playlist updated successfully"));
 });
 export {
