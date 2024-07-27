@@ -1,4 +1,4 @@
-import mongoose, { isValidObjectId} from "mongoose"
+import mongoose, { isValidObjectId } from "mongoose"
 import { Video } from "../models/video.model.js"
 import { User } from "../models/user.model.js"
 import { Comment } from "../models/comment.model.js"
@@ -7,12 +7,11 @@ import { ApiError } from "../utils/ApiError.js"
 import { ApiResponse } from "../utils/ApiResponse.js"
 import { asyncHandler } from "../utils/asyncHandler.js"
 import { deleteFromCloudinary, uploadOnCloudinary } from "../utils/cloudinary.js"
-import { ObjectId } from "bson"
+
 const getAllVideos = asyncHandler(async (req, res) => {
-    const { page = 1, limit = 10, query, sortBy, sortType} = req.query
-    const {userId} = req.params;
+    const { page = 1, limit = 10, query, sortBy, sortType } = req.query
+    const { userId } = req.body;
     //TODO: get all videos based on query, sort, pagination
-    // console.log(userId);
     const pipeline = [];
     // for using Full Text based search u need to create a search index in mongoDB atlas
     // you can include field mapppings in search index eg.title, description, as well
@@ -92,6 +91,7 @@ const publishAVideo = asyncHandler(async (req, res) => {
     if ([title, description].some((field) => field?.trim() === "")) {
         throw new ApiError(400, "title and description required");
     }
+    //add verification step filetype video for videofile,image for thumbnail
     const localVideoFile = req.files?.videoFile[0]?.path;
     const localThumbnail = req.files?.thumbnail[0]?.path;
     if (!localVideoFile) {
@@ -223,6 +223,7 @@ const getVideoById = asyncHandler(async (req, res) => {
             }
         }
     ]);
+    console.log(video);
     if (!video) {
         throw new ApiError(500, "failed to fetch video");
     }
@@ -306,8 +307,8 @@ const deleteVideo = asyncHandler(async (req, res) => {
         throw new ApiError(500, "video not deleted try again");
     }
     if (deleteVideo) {
-        await deleteFromCloudinary(usrVideoId, "video");
         await deleteFromCloudinary(usrThumbId);
+        await deleteFromCloudinary(usrVideoId, "video");
     }
     // delete video likes
     await Like.deleteMany({
