@@ -70,8 +70,7 @@ const getVideoComments = asyncHandler(async (req, res) => {
     };
     const comments = await Comment.aggregatePaginate(commentAggregate, option);
     res.status(200).json(new ApiResponse(200, comments, "comments fetched"));
-})
-
+});
 const addComment = asyncHandler(async (req, res) => {
     // TODO: add a comment to a video
     const { videoId } = req.params;
@@ -92,8 +91,7 @@ const addComment = asyncHandler(async (req, res) => {
         throw new ApiError(500, "comment not added");
     }
     res.status(201).json(new ApiResponse(201, comment, "comment created"))
-})
-
+});
 const updateComment = asyncHandler(async (req, res) => {
     // TODO: update a comment
     const { commentId } = req.params;
@@ -114,8 +112,7 @@ const updateComment = asyncHandler(async (req, res) => {
         throw new ApiError(404, "comment is not updated");
     }
     res.status(200).json(new ApiResponse(200, updatedComment, "comment updated"))
-})
-
+});
 const deleteComment = asyncHandler(async (req, res) => {
     // TODO: delete a comment
     const { commentId } = req.params;
@@ -131,7 +128,6 @@ const deleteComment = asyncHandler(async (req, res) => {
     return res.status(200).json(new ApiResponse(200, { commentId }, "Comment deleted successfully"));
 
 });
-
 export {
     getVideoComments,
     addComment,
