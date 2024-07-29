@@ -108,7 +108,7 @@ const updateComment = asyncHandler(async (req, res) => {
             content
         }
     }, { new: true });
-    if (!updateComment) {
+    if (!updatedComment) {
         throw new ApiError(404, "comment is not updated");
     }
     res.status(200).json(new ApiResponse(200, updatedComment, "comment updated"))
