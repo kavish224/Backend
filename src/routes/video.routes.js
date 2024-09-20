@@ -31,9 +31,9 @@ router
         verifyJWT, publishAVideo
     );
 
+    router.route("/v").get(getVideoById)
 router
     .route("/:videoId")
-    .get(getVideoById)
     .delete(verifyJWT, deleteVideo)
     .patch(verifyJWT, upload.single("thumbnail"), updateVideo);
 

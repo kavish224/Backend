@@ -123,13 +123,10 @@ const publishAVideo = asyncHandler(async (req, res) => {
     return res.status(200).json(new ApiResponse(200, publishedVideo, "video published"));
 });
 const getVideoById = asyncHandler(async (req, res) => {
-    const { videoId } = req.params;
+    const { videoId } = req.body;
     //TODO: get video by id
     if (!isValidObjectId(videoId)) {
         throw new ApiError(400, "invalid video id");
-    }
-    if (!isValidObjectId(req.user?._id)) {
-        throw new ApiError(400, "Invalid userId");
     }
     const video = await Video.aggregate([
         {
@@ -222,7 +219,6 @@ const getVideoById = asyncHandler(async (req, res) => {
             }
         }
     ]);
-    console.log(video);
     if (!video) {
         throw new ApiError(500, "failed to fetch video");
     }
