@@ -38,25 +38,25 @@ const registerUser = asyncHandler(async (req, res) => {
 
     }
     // check for images
-    const avatarLocalPath = req.files?.avatar[0]?.path;
-    const coverImageLocalPath = req.files?.coverimage[0]?.path;
+    // const avatarLocalPath = req.files?.avatar[0]?.path;
+    // const coverImageLocalPath = req.files?.coverimage[0]?.path;
 
     // check for avatar
-    if (!avatarLocalPath) {
-        throw new ApiError(400, "Avatar is required");
-    }
-    // upload them to cloudinary, avatar
-    const avatar = await uploadOnCloudinary(avatarLocalPath);
-    const coverImage = await uploadOnCloudinary(coverImageLocalPath);
+    // if (!avatarLocalPath) {
+    //     throw new ApiError(400, "Avatar is required");
+    // }
+    // // upload them to cloudinary, avatar
+    // const avatar = await uploadOnCloudinary(avatarLocalPath);
+    // const coverImage = await uploadOnCloudinary(coverImageLocalPath);
 
-    if (!avatar) {
-        throw new ApiError(400, "Avatar is required");
-    }
+    // if (!avatar) {
+    //     throw new ApiError(400, "Avatar is required");
+    // }
     // create user object - create entry in db
     const user = await User.create({
         fullname,
-        avatar: avatar.url,
-        coverImage: coverImage?.url || "",
+        avatar: "",
+        coverImage:  "",
         email,
         password,
         username: username.toLowerCase()
