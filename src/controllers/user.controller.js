@@ -174,11 +174,11 @@ const getCurrentUser = asyncHandler(async (req, res) => {
     return res.status(200).json(new ApiResponse(200, req.user, "current user fetched Successfully"));
 });
 const updateAccountDetails = asyncHandler(async (req, res) => {
-    const { fullName, email } = req.body
-    if (!fullName || !email) {
+    const { fullName } = req.body
+    if (!fullName) {
         throw new ApiError(400, "All fields are required")
     }
-    const user = await User.findByIdAndUpdate(req.user?._id, { $set: { fullname: fullName, email } }, { new: true }).select("-password -refreshToken")
+    const user = await User.findByIdAndUpdate(req.user?._id, { $set: { fullname: fullName } }, { new: true }).select("-password -refreshToken")
     return res.status(200).json(new ApiResponse(200, user, "Account details updated successfully"))
 });
 const userAvatar = asyncHandler(async (req, res) => {
