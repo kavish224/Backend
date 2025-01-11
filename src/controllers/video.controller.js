@@ -163,16 +163,7 @@ const getVideoById = asyncHandler(async (req, res) => {
                                 $size: "$subscribers"
                             },
                             isSubscribed: {
-                                $cond: {
-                                    if: {
-                                        $in: [
-                                            req.user?._id,
-                                            "$subscribers.subscribers"
-                                        ]
-                                    },
-                                    then: true,
-                                    else: false
-                                }
+                                $in: [req.user?._id, "$subscribers.subscriber"] // Check if the user ID is in the subscribers array
                             }
                         }
                     },
@@ -219,6 +210,8 @@ const getVideoById = asyncHandler(async (req, res) => {
             }
         }
     ]);
+    // console.log(video);
+    
     if (!video) {
         throw new ApiError(500, "failed to fetch video");
     }
