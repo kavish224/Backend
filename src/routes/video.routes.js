@@ -9,6 +9,7 @@ import {
 } from "../controllers/video.controller.js"
 import { verifyJWT } from "../middlewares/auth.middleware.js"
 import { upload } from "../middlewares/multer.middleware.js"
+import { getUser } from '../middlewares/getUser.middleware.js';
 
 const router = Router();
 // router.use(verifyJWT); // Apply verifyJWT middleware to all routes in this file
@@ -31,7 +32,7 @@ router
         verifyJWT, publishAVideo
     );
 
-    router.route("/v/:videoId").get(getVideoById)
+    router.route("/v/:videoId").get(getUser, getVideoById)
 router
     .route("/:videoId")
     .delete(verifyJWT, deleteVideo)
