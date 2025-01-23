@@ -163,7 +163,16 @@ const getVideoById = asyncHandler(async (req, res) => {
                                 $size: "$subscribers"
                             },
                             isSubscribed: {
-                                $in: [req.user?._id, "$subscribers.subscriber"] // Check if the user ID is in the subscribers array
+                                $cond: {
+                                    if: req.user?._id,
+                                    then: {
+                                        $in: [
+                                            req.user?._id,
+                                            { $map: { input: "$subscribers", as: "sub", in: "$$sub.subscriber" } }
+                                        ]
+                                    },
+                                    else: false
+                                }
                             }
                         }
                     },
@@ -210,8 +219,6 @@ const getVideoById = asyncHandler(async (req, res) => {
             }
         }
     ]);
-    // console.log(video);
-    
     if (!video) {
         throw new ApiError(500, "failed to fetch video");
     }
@@ -334,11 +341,11 @@ const togglePublishStatus = asyncHandler(async (req, res) => {
     }
     return res.status(200).json(new ApiResponse(200, updatePublishedStatus, "published status updated"));
 });
-export { 
-    getAllVideos, 
-    publishAVideo, 
-    getVideoById, 
-    updateVideo, 
-    deleteVideo, 
-    togglePublishStatus 
+export {
+    getAllVideos,
+    publishAVideo,
+    getVideoById,
+    updateVideo,
+    deleteVideo,
+    togglePublishStatus
 }
