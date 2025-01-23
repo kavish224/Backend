@@ -7,7 +7,7 @@ const corsOptions = {
     origin: ['http://localhost:5173', 'https://videotube.kavishambani.in'],
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS','PATCH'],
     credentials: true,
-    allowedHeaders: ['Content-Type', 'Authorization'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'Cookie'],
   };
   
   app.use(cors(corsOptions));
